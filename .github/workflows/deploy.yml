@@ -1,29 +1,43 @@
+# 깃허브 레포지토리의 action 탭에 나타나는 workflow명
 name: Deploy to GitHub Pages
 
+# workflow의 trigger.
 on:
+# main branch 상에 push했을 때 workflow가 실행됨.
   push:
     branches: [main]
 
+# 워크플로를 수동으로 트리거할 수 있도록 하려면 이벤트를 구성할 수 있다. 여기에서는 설정하지 않았다.
   workflow_dispatch:
 
+# 작업 정의 내에서 권한을 지정하면 필요한 경우 각 작업에 대해 서로 다른 권한 집합을 구성할 수 있다.
 permissions:
+# contents 작업은 읽기 작업, pages 작업은 쓰기 작업, id-token 작업은 쓰기 작업이 가능하다.
   contents: read
   pages: write
   id-token: write
 
+# 동일한 동시성 그룹을 사용하는 단일 작업 또는 워크플로만 한 번에 실행되도록 할 수 있다.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# 수행되어야 하는 작업
 jobs:
+# 작업 이름
   build:
+#   작업 환경. 우분투 최신버전
     runs-on: ubuntu-latest
+#     shell script나 action을 실행.
     steps:
+#     step 이름 및 실행 action
+#     action을 사용할 때에는 uses
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Node
         uses: actions/setup-node@v3
+#       실행 부가 정보
         with:
           node-version: 16.x
           cache: 'npm'
@@ -38,6 +52,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
+#     shell script 실행시 run
       - name: Install dependencies
         run: npm ci
 
@@ -50,10 +65,12 @@ jobs:
           path: ./dist
 
   deploy:
+#   환경 변수 설정
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+#    의존관계. build가 완료될 때까지 기다림.
     needs: build
     steps:
       - name: Deploy to GitHub Pages
