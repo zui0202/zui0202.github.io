@@ -18,8 +18,8 @@ const config = {
     instagram: '',
     dribbble: '',
     behance: '',
-    medium: 'arifszn',
-    dev: 'arifszn',
+    medium: '',
+    dev: '',
     stackoverflow: '', // format: userid/username
     skype: '',
     telegram: '',
@@ -54,18 +54,18 @@ const config = {
       companyLink: '',
     },
   ],
-  /* certifications: [
+  certifications: [
     {
       name: '정보처리기사',
       body: '필기 및 실기',
       year: 'August 2022',
       link: ''
     },
-  ], */
+  ],
   education: [
     {
       institution: 'Sungkyunkwan University',
-      degree: 'bachelor Degree',
+      degree: 'Bachelor Degree',
       from: '2019',
       to: '2023',
     },
