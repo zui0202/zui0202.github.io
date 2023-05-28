@@ -65,7 +65,7 @@ const config = {
   education: [
     {
       institution: 'Sungkyunkwan University',
-      degree: 'Bachelor Degree',
+      degree: 'Bachelor Degree of Software',
       from: '2019',
       to: '2023',
     },
